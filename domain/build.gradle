@@ -1,0 +1,8 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+dependencies {
+    testCompile 'org.codehaus.groovy:groovy-all:2.+'
+    testCompile 'org.assertj:assertj-core:1.5.0'
+    testCompile 'junit:junit:4.+'
+}
