@@ -1,7 +1,8 @@
 package com.seabornlee.threes;
 
 public class CoordinateGenerator {
+
     public Coordinate generate() {
-        return null;
+        return new Coordinate(0, 0);
     }
 }
