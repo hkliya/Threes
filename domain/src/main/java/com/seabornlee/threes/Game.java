@@ -41,9 +41,13 @@ public class Game {
             for (int col = 2; col >= 0; col--) {
                 Cell cell = matrix[row][col];
                 if (cell != null && cell.isMovable()) {
-                    for (int temp=col; temp<SIZE-1; temp++) {
-                        if (matrix[row][temp+1] == null) {
+                    for (int temp = col; temp < SIZE - 1; temp++) {
+                        Cell rightCell = matrix[row][temp + 1];
+                        if (rightCell == null) {
                             matrix[row][temp + 1] = matrix[row][temp];
+                            matrix[row][temp] = null;
+                        } else if (rightCell.getNumber() == matrix[row][temp].getNumber()) {
+                            matrix[row][temp + 1].number *= 2;
                             matrix[row][temp] = null;
                         }
                     }

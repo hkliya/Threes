@@ -66,4 +66,18 @@ class GameTest extends groovy.util.GroovyTestCase {
         assertThat(game.cellAt(1, 1).isMovable()).isFalse()
     }
 
+    void testShouldMergeCellsWhenHasSameNumber() {
+        // given
+        def generator = mock(CoordinateGenerator.class)
+        when(generator.generate()).thenReturn(new Coordinate(1, 1), new Coordinate(0, 0), new Coordinate(0, 1), new Coordinate(3, 2));
+        def game = new Game(generator)
+        game.start()
+
+        // when
+        game.moveRight()
+
+        // then
+        assertThat(game.cellAt(0, 3).number).isEqualTo(4)
+    }
+
 }
