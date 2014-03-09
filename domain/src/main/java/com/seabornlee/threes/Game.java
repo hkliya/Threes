@@ -3,7 +3,7 @@ package com.seabornlee.threes;
 import java.util.Random;
 
 public class Game {
-    private static final int SIZE = 5;
+    public static final int SIZE = 4;
     private final Cell[][] matrix = new Cell[SIZE][SIZE];
     private boolean isRunning;
 
@@ -22,10 +22,10 @@ public class Game {
 
     private void placeAnImmovableCell() {
         Random random = new Random();
-        int row = random.nextInt(3);
-        int col = random.nextInt(3);
+        int row = random.nextInt(2);
+        int col = random.nextInt(2);
 
-        matrix[2 + row][2 + col] = Cell.IMMOVABLE;
+        matrix[1 + row][1 + col] = Cell.IMMOVABLE;
     }
 
     public boolean isStarted() {

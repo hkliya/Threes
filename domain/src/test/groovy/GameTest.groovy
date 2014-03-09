@@ -1,5 +1,7 @@
 package com.seabornlee.threes
 
+import static com.seabornlee.threes.Game.SIZE
+
 class GameTest extends groovy.util.GroovyTestCase {
     void testShouldStartGame() {
         def game = new Game()
@@ -14,8 +16,8 @@ class GameTest extends groovy.util.GroovyTestCase {
         def game = new Game()
 
         int countOfImmovableCell = 0
-        for (int i=0; i<5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i=0; i<SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 if (game.cellAt(i, j).isImmovable())
                     countOfImmovableCell++
             }
