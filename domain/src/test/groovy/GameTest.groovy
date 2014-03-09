@@ -1,15 +1,15 @@
 package com.seabornlee.threes
 
 import static com.seabornlee.threes.Game.SIZE
+import static org.assertj.core.api.Assertions.*
 
 class GameTest extends groovy.util.GroovyTestCase {
     void testShouldStartGame() {
         def game = new Game()
-        assertFalse(game.isStarted())
 
         game.start()
 
-        assertTrue(game.isStarted())
+        assertThat(game.isStarted()).isTrue()
     }
 
     void testShouldInitWithOneImmovableCell() {
@@ -18,11 +18,15 @@ class GameTest extends groovy.util.GroovyTestCase {
         int countOfImmovableCell = 0
         for (int i=0; i<SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (game.cellAt(i, j).isImmovable())
+                if (game.cellAt(i, j).isImmovable()) {
+                    assertThat(i).isBetween(1, 2)
+                    assertThat(j).isBetween(1, 2)
+
                     countOfImmovableCell++
+                }
             }
         }
 
-        assertEquals(1, countOfImmovableCell)
+        assertThat(countOfImmovableCell).isEqualTo(1)
     }
 }
