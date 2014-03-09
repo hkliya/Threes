@@ -8,16 +8,7 @@ public class Game {
     private boolean isRunning;
 
     public Game() {
-        initMatrix();
         placeAnImmovableCell();
-    }
-
-    private void initMatrix() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                matrix[i][j] = new Cell();
-            }
-        }
     }
 
     private void placeAnImmovableCell() {
@@ -41,15 +32,32 @@ public class Game {
     }
 
     private static class Cell {
-        public static final Cell IMMOVABLE = new Cell() {
-            @Override
-            public boolean isImmovable() {
-                return true;
-            }
-        };
+        private static final Cell IMMOVABLE = new Cell(0);
+        private int number;
+
+        private Cell(int number) {
+            this.number = number;
+        }
 
         public boolean isImmovable() {
-            return false;
+            return this.equals(IMMOVABLE);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Cell cell = (Cell) o;
+
+            if (number != cell.number) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return number;
         }
     }
 }

@@ -18,7 +18,8 @@ class GameTest extends groovy.util.GroovyTestCase {
         int countOfImmovableCell = 0
         for (int i=0; i<SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (game.cellAt(i, j).isImmovable()) {
+                def cell = game.cellAt(i, j)
+                if (cell != null && cell.isImmovable()) {
                     assertThat(i).isBetween(1, 2)
                     assertThat(j).isBetween(1, 2)
 
