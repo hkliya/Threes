@@ -24,7 +24,18 @@ public class Game {
     }
 
     public void start() {
+        for (int i = 0; i < 3; i++) {
+            placeACell();
+        }
         isRunning = true;
+    }
+
+    private void placeACell() {
+        Random random = new Random();
+        int i = random.nextInt(SIZE);
+        int j = random.nextInt(SIZE);
+
+        matrix[i][j] = new Cell(2);
     }
 
     public Cell cellAt(int row, int col) {

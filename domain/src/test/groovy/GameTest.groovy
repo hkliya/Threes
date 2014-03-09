@@ -30,4 +30,23 @@ class GameTest extends groovy.util.GroovyTestCase {
 
         assertThat(countOfImmovableCell).isEqualTo(1)
     }
+
+    void testShouldPlaceThreeCellsWhenGameStarted() {
+        def game = new Game()
+
+        game.start()
+
+        int countOfMovableCells = 0
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                def cell = game.cellAt(i, j)
+                if (cell != null && !cell.isImmovable()) {
+                    countOfMovableCells++
+                }
+            }
+
+        }
+
+        assertThat(countOfMovableCells).isEqualTo(3)
+    }
 }
