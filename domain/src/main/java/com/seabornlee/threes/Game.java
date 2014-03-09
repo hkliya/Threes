@@ -101,6 +101,29 @@ public class Game {
         return tempMatrix;
     }
 
+    public void moveLeft() {
+        Cell[][] tempMatrix = rotateLeft(matrix);
+        tempMatrix = rotateLeft(tempMatrix);
+
+        moveAllRight(tempMatrix);
+
+        tempMatrix = rotateRight(tempMatrix);
+        tempMatrix = rotateRight(tempMatrix);
+
+        restore(tempMatrix);
+
+        placeACell();
+    }
+
+    public void moveUp() {
+        Cell[][] tempMatrix = rotateRight(matrix);
+        moveAllRight(tempMatrix);
+        tempMatrix = rotateLeft(tempMatrix);
+        restore(tempMatrix);
+
+        placeACell();
+    }
+
     private static class Cell {
         private static final Cell IMMOVABLE = new Cell(0);
         private int number;

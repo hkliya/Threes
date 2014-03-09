@@ -112,4 +112,40 @@ class GameTest extends groovy.util.GroovyTestCase {
         assertThat(game.cellAt(2, 2)).isNull()
         assertThat(game.cellAt(2, 3)).isNotNull()
     }
+
+    void testShouldMoveLeft() {
+        // given
+        def generator = mock(CoordinateGenerator.class)
+        when(generator.generate()).thenReturn(new Coordinate(1, 1), new Coordinate(0, 0), new Coordinate(0, 1), new Coordinate(2, 2), new Coordinate(2, 3))
+        def game = new Game(generator)
+        game.start()
+
+        // when
+        game.moveLeft()
+
+        // then
+        assertThat(game.cellAt(0, 0).number).isEqualTo(4)
+        assertThat(game.cellAt(2, 0).number).isEqualTo(2)
+        assertThat(game.cellAt(0, 1)).isNull()
+        assertThat(game.cellAt(2, 2)).isNull()
+        assertThat(game.cellAt(2, 3)).isNotNull()
+    }
+
+    void testShouldMoveUp() {
+        // given
+        def generator = mock(CoordinateGenerator.class)
+        when(generator.generate()).thenReturn(new Coordinate(1, 1), new Coordinate(0, 0), new Coordinate(1, 0), new Coordinate(2, 2), new Coordinate(2, 3))
+        def game = new Game(generator)
+        game.start()
+
+        // when
+        game.moveUp()
+
+        // then
+        assertThat(game.cellAt(0, 0).number).isEqualTo(4)
+        assertThat(game.cellAt(0, 2).number).isEqualTo(2)
+        assertThat(game.cellAt(1, 0)).isNull()
+        assertThat(game.cellAt(2, 2)).isNull()
+        assertThat(game.cellAt(2, 3)).isNotNull()
+    }
 }
