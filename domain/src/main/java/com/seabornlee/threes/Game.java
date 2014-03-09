@@ -37,6 +37,12 @@ public class Game {
     }
 
     public void moveRight() {
+        moveAllRight(matrix);
+
+        placeACell();
+    }
+
+    private void moveAllRight(Cell[][] matrix) {
         for (int row = 0; row < SIZE; row++) {
             for (int col = 2; col >= 0; col--) {
                 Cell cell = matrix[row][col];
@@ -54,8 +60,45 @@ public class Game {
                 }
             }
         }
+    }
+
+    public void moveDown() {
+        Cell[][] tempMatrix = rotateLeft(matrix);
+        moveAllRight(tempMatrix);
+        tempMatrix = rotateRight(tempMatrix);
+        restore(tempMatrix);
 
         placeACell();
+    }
+
+    private void restore(Cell[][] matrix) {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                this.matrix[row][col] = matrix[row][col];
+            }
+        }
+    }
+
+    private Cell[][] rotateRight(Cell[][] matrix) {
+        Cell[][] tempMatrix = new Cell[SIZE][SIZE];
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                tempMatrix[col][SIZE - 1 - row] = matrix[row][col];
+            }
+        }
+
+        return tempMatrix;
+    }
+
+    private Cell[][] rotateLeft(Cell[][] matrix) {
+        Cell[][] tempMatrix = new Cell[SIZE][SIZE];
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                tempMatrix[SIZE - 1 - col][row] = matrix[row][col];
+            }
+        }
+
+        return tempMatrix;
     }
 
     private static class Cell {
