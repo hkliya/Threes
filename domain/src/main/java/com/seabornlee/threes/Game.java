@@ -1,24 +1,19 @@
 package com.seabornlee.threes;
 
-import com.google.common.collect.Range;
-
-import java.util.Random;
-
 public class Game {
     public static final int SIZE = 4;
     private final Cell[][] matrix = new Cell[SIZE][SIZE];
     private boolean isRunning;
-    private Random random = new Random();
+    private CoordinateGenerator coordinateGenerator;
 
-    public Game() {
+    public Game(CoordinateGenerator coordinateGenerator) {
+        this.coordinateGenerator = coordinateGenerator;
         placeAnImmovableCell();
     }
 
     private void placeAnImmovableCell() {
-        int row = random.nextInt(2);
-        int col = random.nextInt(2);
-
-        matrix[1 + row][1 + col] = Cell.IMMOVABLE;
+        Coordinate coordinate = coordinateGenerator.generate();
+        matrix[coordinate.row][coordinate.col] = Cell.IMMOVABLE;
     }
 
     public boolean isStarted() {
@@ -33,14 +28,25 @@ public class Game {
     }
 
     private void placeACell() {
-        int i = random.nextInt(SIZE);
-        int j = random.nextInt(SIZE);
-
-        matrix[i][j] = new Cell(2);
+        Coordinate coordinate = coordinateGenerator.generate();
+        matrix[coordinate.row][coordinate.col] = new Cell(2);
     }
 
     public Cell cellAt(int row, int col) {
         return matrix[row][col];
+    }
+
+    public void moveRight() {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 2; col >= 0; col--) {
+                if (matrix[row][col] != null) {
+                    for (int temp=col; temp<SIZE-1; temp++) {
+                        if (matrix[row][temp+1] == null)
+                            matrix[row][temp+1] = matrix[row][temp];
+                    }
+                }
+            }
+        }
     }
 
     private static class Cell {
@@ -53,6 +59,10 @@ public class Game {
 
         public boolean isMovable() {
             return !this.equals(IMMOVABLE);
+        }
+
+        public int getNumber() {
+            return number;
         }
 
         @Override

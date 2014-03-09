@@ -1,47 +1,51 @@
 package com.seabornlee.threes
 
-import static com.seabornlee.threes.Game.SIZE
-import static org.assertj.core.api.Assertions.*
+import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Mockito.mock
+import static org.mockito.Mockito.when
 
 class GameTest extends groovy.util.GroovyTestCase {
     void testShouldInitWithOneImmovableCell() {
-        def game = new Game()
+        // given
+        def coordinateGenerator = mock(CoordinateGenerator)
+        when(coordinateGenerator.generate()).thenReturn(new Coordinate(2, 2))
 
-        int countOfImmovableCell = 0
-        int row, col
-        for (int i=0; i<SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                def cell = game.cellAt(i, j)
-                if (cell != null && !cell.isMovable()) {
-                    row = i
-                    col = j
-                    countOfImmovableCell++
-                }
-            }
-        }
+        // when
+        def game = new Game(coordinateGenerator)
 
-        assertThat(countOfImmovableCell).isEqualTo(1)
-        assertThat(row).isBetween(1, 2)
-        assertThat(col).isBetween(1, 2)
+        // then
+        assertThat(game.cellAt(2, 2).movable).isFalse()
     }
 
     void testShouldPlaceThreeCellsWhenGameStarted() {
-        def game = new Game()
+        // given
+        def coordinateGenerator = mock(CoordinateGenerator)
+        when(coordinateGenerator.generate()).thenReturn(new Coordinate(2, 2), new Coordinate(0, 0), new Coordinate(1, 0), new Coordinate(2, 0))
+        def game = new Game(coordinateGenerator)
 
+        // when
         game.start()
 
-        int countOfMovableCells = 0
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                def cell = game.cellAt(i, j)
-                if (cell != null && cell.movable) {
-                    countOfMovableCells++
-                }
-            }
-
-        }
-
-        assertThat(countOfMovableCells).isEqualTo(3)
+        // then
+        assertThat(game.cellAt(0, 0).number).isEqualTo(2)
+        assertThat(game.cellAt(1, 0).number).isEqualTo(2)
+        assertThat(game.cellAt(2, 0).number).isEqualTo(2)
         assertThat(game.isStarted()).isTrue()
+    }
+
+    void testShouldMoveRightWhenRightIsEmpty() {
+        // given
+        def generator = mock(CoordinateGenerator.class)
+        when(generator.generate()).thenReturn(new Coordinate(1, 1), new Coordinate(0, 0), new Coordinate(2, 1), new Coordinate(3, 2));
+        def game = new Game(generator)
+        game.start()
+
+        // when
+        game.moveRight()
+
+        // then
+        assertThat(game.cellAt(0, 3).number).isEqualTo(2)
+        assertThat(game.cellAt(2, 3).number).isEqualTo(2)
+        assertThat(game.cellAt(3, 3).number).isEqualTo(2)
     }
 }
