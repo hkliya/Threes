@@ -1,18 +1,20 @@
 package com.seabornlee.threes;
 
+import com.google.common.collect.Range;
+
 import java.util.Random;
 
 public class Game {
     public static final int SIZE = 4;
     private final Cell[][] matrix = new Cell[SIZE][SIZE];
     private boolean isRunning;
+    private Random random = new Random();
 
     public Game() {
         placeAnImmovableCell();
     }
 
     private void placeAnImmovableCell() {
-        Random random = new Random();
         int row = random.nextInt(2);
         int col = random.nextInt(2);
 
@@ -31,7 +33,6 @@ public class Game {
     }
 
     private void placeACell() {
-        Random random = new Random();
         int i = random.nextInt(SIZE);
         int j = random.nextInt(SIZE);
 
@@ -50,8 +51,8 @@ public class Game {
             this.number = number;
         }
 
-        public boolean isImmovable() {
-            return this.equals(IMMOVABLE);
+        public boolean isMovable() {
+            return !this.equals(IMMOVABLE);
         }
 
         @Override
