@@ -39,7 +39,8 @@ public class Game {
     public void moveRight() {
         for (int row = 0; row < SIZE; row++) {
             for (int col = 2; col >= 0; col--) {
-                if (matrix[row][col] != null) {
+                Cell cell = matrix[row][col];
+                if (cell != null && cell.isMovable()) {
                     for (int temp=col; temp<SIZE-1; temp++) {
                         if (matrix[row][temp+1] == null) {
                             matrix[row][temp + 1] = matrix[row][temp];
