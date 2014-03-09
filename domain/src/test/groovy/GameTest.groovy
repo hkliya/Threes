@@ -47,5 +47,8 @@ class GameTest extends groovy.util.GroovyTestCase {
         assertThat(game.cellAt(0, 3).number).isEqualTo(2)
         assertThat(game.cellAt(2, 3).number).isEqualTo(2)
         assertThat(game.cellAt(3, 3).number).isEqualTo(2)
+        assertThat(game.cellAt(0, 0)).isNull()
+        assertThat(game.cellAt(2, 1)).isNull()
+        assertThat(game.cellAt(3, 2)).isNull()
     }
 }
