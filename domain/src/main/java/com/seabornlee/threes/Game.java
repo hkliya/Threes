@@ -54,6 +54,8 @@ public class Game {
                 }
             }
         }
+
+        placeACell();
     }
 
     private static class Cell {

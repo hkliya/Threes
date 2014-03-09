@@ -36,7 +36,7 @@ class GameTest extends groovy.util.GroovyTestCase {
     void testShouldMoveRightWhenRightIsEmpty() {
         // given
         def generator = mock(CoordinateGenerator.class)
-        when(generator.generate()).thenReturn(new Coordinate(1, 1), new Coordinate(0, 0), new Coordinate(2, 1), new Coordinate(3, 2));
+        when(generator.generate()).thenReturn(new Coordinate(1, 1), new Coordinate(0, 0), new Coordinate(2, 1), new Coordinate(3, 2), new Coordinate(3, 0))
         def game = new Game(generator)
         game.start()
 
@@ -78,6 +78,20 @@ class GameTest extends groovy.util.GroovyTestCase {
 
         // then
         assertThat(game.cellAt(0, 3).number).isEqualTo(4)
+    }
+
+    void testShouldPlaceANewCellAfterMoved() {
+        // given
+        def generator = mock(CoordinateGenerator.class)
+        when(generator.generate()).thenReturn(new Coordinate(1, 1), new Coordinate(0, 0), new Coordinate(0, 1), new Coordinate(0, 2), new Coordinate(2, 2))
+        def game = new Game(generator)
+        game.start()
+
+        // when
+        game.moveRight()
+
+        // then
+        assertThat(game.cellAt(2, 2)).isNotNull()
     }
 
 }
